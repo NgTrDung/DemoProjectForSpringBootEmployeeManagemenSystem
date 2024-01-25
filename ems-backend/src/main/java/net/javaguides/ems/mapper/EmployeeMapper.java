@@ -15,7 +15,7 @@ public class EmployeeMapper {
 				);
 	}
 
-	private static Employee mapToEmployee(EmployeeDTO employeeDTO) 
+	public static Employee mapToEmployee(EmployeeDTO employeeDTO) 
 	{
 		return new Employee(
 				employeeDTO.getId(),
