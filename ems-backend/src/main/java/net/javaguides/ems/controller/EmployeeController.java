@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,6 +53,13 @@ public class EmployeeController {
 			@RequestBody EmployeeDTO updatedEmployee){
 		EmployeeDTO employeeDTO = employeeService.updateEmployee(employeeId, updatedEmployee);
 		return ResponseEntity.ok(employeeDTO);
+	}
+	
+	// Build DELETE Employee REST API
+	@DeleteMapping("{id}")
+	public ResponseEntity<String> deleteEmployee(@PathVariable("id") Long enployeeId){
+		employeeService.deleteEmployee(enployeeId);
+		return ResponseEntity.ok("Employee is deleted successfully!");
 	}
 
 }

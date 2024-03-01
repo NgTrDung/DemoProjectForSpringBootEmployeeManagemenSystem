@@ -32,8 +32,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public EmployeeDTO getEmployeeById(Long employeeId) {
 		Employee employee = employeeReporistory.findById(employeeId).orElseThrow(
-				() -> new NotFoundException("Employee is not exist"));
-//		Employee employee = employeeReporistory.findById(employeeId).get();
+				() -> new NotFoundException("Employee is not exist with Id: " + employeeId));
 		return EmployeeMapper.mapToEmployeeDTO(employee);
 	}
 
@@ -47,12 +46,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public EmployeeDTO updateEmployee(Long employeeId, EmployeeDTO updatedEmployee) {
 		Employee employee = employeeReporistory.findById(employeeId).orElseThrow(
-				() -> new NotFoundException("Employee is not exist"));
+				() -> new NotFoundException("Employee is not exist with Id: " + employeeId));
 		employee.setFirstName(updatedEmployee.getFirstName());
 		employee.setLastName(updatedEmployee.getLastName());
 		employee.setEmail(updatedEmployee.getEmail());
 		employeeReporistory.save(employee);
 		return EmployeeMapper.mapToEmployeeDTO(employee);
+	}
+
+	@Override
+	public void deleteEmployee(Long employeeId) {
+		Employee employee = employeeReporistory.findById(employeeId).orElseThrow(
+				() -> new NotFoundException("Employee is not exist with Id: " + employeeId));
+		employeeReporistory.deleteById(employeeId);
 	}
 
 }
