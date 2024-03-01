@@ -3,12 +3,13 @@ package net.javaguides.ems.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
 import net.javaguides.ems.dto.EmployeeDTO;
 import net.javaguides.ems.entity.Employee;
-import net.javaguides.ems.exception.ResourceNotFoundException;
+import net.javaguides.ems.exception.NotFoundException;
 import net.javaguides.ems.mapper.EmployeeMapper;
 import net.javaguides.ems.repositories.EmployeeReporistory;
 import net.javaguides.ems.service.EmployeeService;
@@ -17,6 +18,7 @@ import net.javaguides.ems.service.EmployeeService;
 @AllArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
 
+	@Autowired
 	private EmployeeReporistory employeeReporistory;
 
 	@Override
@@ -29,11 +31,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public EmployeeDTO getEmployeeById(Long employeeId) {
-//		Employee employee = employeeReporistory.findById(employeeId).orElseThrow(
-//				() -> new ResourceNotFoundException("Employee is not exits"));
 		Employee employee = employeeReporistory.findById(employeeId).orElseThrow(
-				() -> new ResourceNotFoundException("Employee is not exist with Id: " + employeeId)
-				);
+				() -> new NotFoundException("Employee is not exist"));
+//		Employee employee = employeeReporistory.findById(employeeId).get();
 		return EmployeeMapper.mapToEmployeeDTO(employee);
 	}
 
@@ -47,8 +47,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public EmployeeDTO updateEmployee(Long employeeId, EmployeeDTO updatedEmployee) {
 		Employee employee = employeeReporistory.findById(employeeId).orElseThrow(
-				() -> new ResourceNotFoundException("Employee is not exist with Id: " 
-						+ employeeId));
+				() -> new NotFoundException("Employee is not exist"));
 		employee.setFirstName(updatedEmployee.getFirstName());
 		employee.setLastName(updatedEmployee.getLastName());
 		employee.setEmail(updatedEmployee.getEmail());
