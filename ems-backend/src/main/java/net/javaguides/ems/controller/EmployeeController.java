@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,6 +44,14 @@ public class EmployeeController {
 	public ResponseEntity<List<EmployeeDTO>> getAllEmployee() {
 		List<EmployeeDTO> employees = employeeService.getAllEmployee();
 		return ResponseEntity.ok(employees);
+	}
+	
+	// Build UPDATE Employee REST API
+	@PutMapping("{id}")
+	public ResponseEntity<EmployeeDTO> updateEmployee(@PathVariable("id") Long employeeId, 
+			@RequestBody EmployeeDTO updatedEmployee){
+		EmployeeDTO employeeDTO = employeeService.updateEmployee(employeeId, updatedEmployee);
+		return ResponseEntity.ok(employeeDTO);
 	}
 
 }

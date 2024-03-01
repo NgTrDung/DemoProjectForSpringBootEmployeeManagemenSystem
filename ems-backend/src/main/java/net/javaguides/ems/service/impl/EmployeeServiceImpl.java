@@ -1,7 +1,6 @@
 package net.javaguides.ems.service.impl;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -30,8 +29,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public EmployeeDTO getEmployeeById(Long employeeId) {
+//		Employee employee = employeeReporistory.findById(employeeId).orElseThrow(
+//				() -> new ResourceNotFoundException("Employee is not exits"));
 		Employee employee = employeeReporistory.findById(employeeId).orElseThrow(
-				() -> new ResourceNotFoundException("Employee is not exits"));
+				() -> new ResourceNotFoundException("Employee is not exist with Id: " + employeeId)
+				);
 		return EmployeeMapper.mapToEmployeeDTO(employee);
 	}
 
@@ -40,6 +42,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 		List<Employee> employees = employeeReporistory.findAll();
 		return employees.stream().map((employee) -> 
 				EmployeeMapper.mapToEmployeeDTO(employee)).collect(Collectors.toList());
+	}
+
+	@Override
+	public EmployeeDTO updateEmployee(Long employeeId, EmployeeDTO updatedEmployee) {
+		Employee employee = employeeReporistory.findById(employeeId).orElseThrow(
+				() -> new ResourceNotFoundException("Employee is not exist with Id: " 
+						+ employeeId));
+		employee.setFirstName(updatedEmployee.getFirstName());
+		employee.setLastName(updatedEmployee.getLastName());
+		employee.setEmail(updatedEmployee.getEmail());
+		employeeReporistory.save(employee);
+		return EmployeeMapper.mapToEmployeeDTO(employee);
 	}
 
 }
