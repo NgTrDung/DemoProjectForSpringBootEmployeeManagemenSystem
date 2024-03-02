@@ -1,1 +1,13 @@
 /.metadata/
+full-stack/ems-frontend/.eslintrc.cjs
+full-stack/ems-frontend/.eslintrc.cjs
+full-stack/ems-frontend/.eslintrc.cjs
+full-stack/ems-frontend/index.html
+full-stack/ems-frontend/package-lock.json
+full-stack/ems-frontend/.eslintrc.cjs
+*.cjs
+full-stack/ems-frontend/index.html
+full-stack/ems-frontend/package-lock.json
+full-stack/ems-frontend/package.json
+full-stack/ems-frontend/public/vite.svg
+full-stack/ems-frontend/README.md
