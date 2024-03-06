@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { createEmployee } from '../services/EmployeeService';
+import { useNavigate } from 'react-router-dom';
 
 const EmployeesComponent = () => {
 
@@ -6,11 +8,18 @@ const EmployeesComponent = () => {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
 
+  const navigator = useNavigate();
+
   function saveEmployee(e){
     e.preventDefault();
     
     const employee = {firstName, lastName, email}
     console.log(employee)
+
+    createEmployee(employee).then((respone) => {
+      console.log(respone.data);
+      navigator('/employees')
+    })
   }
 
   return (
